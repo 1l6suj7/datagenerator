@@ -164,7 +164,7 @@ fail:
 }
 
 int main() {
-    std::cout << "Data generator launched successfully!\nVersion:1.0\n" << std::flush;
+    std::cout << "Data generator launched successfully!\nVersion:1.0.0\n" << std::flush;
     std::this_thread::sleep_for(1000ms);
     while (true) {
         pages[page_no]();

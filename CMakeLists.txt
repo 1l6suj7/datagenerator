@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.10)
 
 project(datagenerator
-        VERSION 1.0
+        VERSION 1.0.0
         LANGUAGES CXX
         DESCRIPTION "A tool for generating input and output test data for evaluation machines"
 )
