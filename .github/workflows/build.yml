@@ -34,5 +34,5 @@ jobs:
       uses: softprops/action-gh-release@v1
       with:
         files: |
-          build/**/datagenerator.exe
-          build/**/datagenerator
+          build/datagenerator.exe
+          build/datagenerator
