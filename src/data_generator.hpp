@@ -42,7 +42,7 @@ public:
 
         for (int i = start_idx; i <= end_idx; ++i) {
             fs::path in_file  = output_dir / (std::to_string(i) + ".in");
-            fs::path out_file = output_dir / (std::to_string(i) + ".out");
+            fs::path out_file = output_dir / (std::to_string(i) + ".ans");
 
             std::cout << std::format("Generating testcase #{} ...", i) << std::flush;
 
