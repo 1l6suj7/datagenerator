@@ -1,14 +1,17 @@
-name: Cross-Platform Build & Test
+name: Build and Release
 
 on:
   push:
-    branches: [ "main" ]
-  release:
-    types: [published]
+    tags:
+      - 'v*'
+  workflow_dispatch:
 
 jobs:
   build:
     name: Build on ${{ matrix.os }}
+    permissions:
+      contents: write
+
     strategy:
       fail-fast: false
       matrix:
@@ -17,22 +20,25 @@ jobs:
     runs-on: ${{ matrix.os }}
 
     steps:
-    - uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-    - name: Configure CMake
-      run: cmake -B build -DCMAKE_BUILD_TYPE=Release
+      - name: Configure CMake
+        run: cmake -B build -DCMAKE_BUILD_TYPE=Release
 
-    - name: Build
-      run: cmake --build build --config Release
+      - name: Build
+        run: cmake --build build --config Release
 
-    - name: Test
-      working-directory: build
-      run: ctest --output-on-failure -C Release
+      - name: Run Tests
+        working-directory: build
+        run: ctest --output-on-failure -C Release
 
-    - name: Upload Release Asset
-      if: github.event_name == 'release'
-      uses: softprops/action-gh-release@v1
-      with:
-        files: |
-          build/datagenerator.exe
-          build/datagenerator
+      - name: Upload Release Asset
+        uses: softprops/action-gh-release@v2
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          files: |
+            build/**/datagenerator.exe
+            build/**/datagenerator
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
